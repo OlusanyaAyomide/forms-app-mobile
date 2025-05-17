@@ -52,6 +52,7 @@ export default function InputField<T extends FieldValues>({
               onBlur={onBlur}
               value={value}
               editable={!disabled}
+              autoCapitalize="none"
               className={cn(
                 'h-12 px-4 py-2 border rounded-xl text-base',
                 theme === "light" ? "bg-[#F0F5FB]" : "bg-[#232425] text-dark-text",

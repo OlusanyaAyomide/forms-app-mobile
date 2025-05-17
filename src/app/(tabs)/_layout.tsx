@@ -19,13 +19,13 @@ function TabBarIcon(props: {
 export default function TabLayout() {
   const colorScheme = useColorScheme();
 
-  const isFirstLogIn = false
+  const isFirstLogIn = true
 
   const isLoggedIn = false
 
   if (isFirstLogIn) {
     return <Redirect href={"/onboarding"} />
-  } else if (!isFirstLogIn) {
+  } else if (!isLoggedIn) {
     return <Redirect href={"/login"} />
   }
 

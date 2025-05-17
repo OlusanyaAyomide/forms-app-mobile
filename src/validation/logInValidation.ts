@@ -1,6 +1,6 @@
 import * as yup from "yup"
 
-import { UserLoginFormData, UserRegistrationFormData } from "../types/auth.types";
+import { ForgotPasswordFormData, UserLoginFormData, UserRegistrationFormData } from "../types/auth.types";
 import { validateRequiredEmail, validateRequiredPassword, validateRequiredPasswordConfirmation, validateRequiredString } from "./validation.services";
 
 export const signUpSchema: yup.ObjectSchema<UserRegistrationFormData> = yup.object({
@@ -13,3 +13,9 @@ export const loginSchema: yup.ObjectSchema<UserLoginFormData> = yup.object({
   email: validateRequiredEmail('E-mail'),
   password: validateRequiredString('Password'),
 });
+
+export const forgotPasswordSchema: yup.ObjectSchema<ForgotPasswordFormData> = yup.object({
+  email: validateRequiredEmail('E-mail'),
+});
+
+

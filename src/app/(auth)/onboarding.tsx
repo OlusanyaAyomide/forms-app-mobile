@@ -17,7 +17,7 @@ export default function OnBoarding() {
       ctaText="Continue"
       onContinue={() => router.push('/safe-guard')}
       showSkip={true}
-      onSkip={() => router.push('/login')}
+      onSkip={() => router.push("/signup")}
     />
   );
 }

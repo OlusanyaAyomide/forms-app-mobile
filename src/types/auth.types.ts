@@ -9,6 +9,10 @@ export type UserLoginFormData = {
   password: string;
 };
 
+export type ForgotPasswordFormData = {
+  email: string;
+};
+
 export type UserResetPasswordFormData = {
   token: string;
   password: string;

@@ -58,11 +58,11 @@ export default function LogInScreen() {
       </TouchableOpacity>
 
       <View className="flex-row justify-between items-center mt-4">
-        {/* <Link href="/forgot-password" asChild>
+        <Link href="/forgot-password" asChild>
           <TouchableOpacity>
             <Text className="text-primary">Forgot Password?</Text>
           </TouchableOpacity>
-        </Link> */}
+        </Link>
       </View>
 
       {/* Social Login - Placeholders */}
