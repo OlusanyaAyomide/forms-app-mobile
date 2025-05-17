@@ -3,6 +3,8 @@ const tintColorDark = '#fff';
 
 export default {
   link: '#2e78b7',
+  primary: '#690896',
+  secondary: '#E3E6FE',
   light: {
     text: '#000',
     background: '#fff',

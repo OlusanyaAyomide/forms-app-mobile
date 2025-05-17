@@ -9,6 +9,7 @@ import { useColorScheme } from '@/src/components/useColorScheme';
 
 // Import your global CSS file
 import "../../global.css"
+import { Text } from '../components/Themed';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -29,6 +30,8 @@ export default function RootLayout() {
     ...FontAwesome.font,
   });
 
+  // const isReady = useInitialNavigation()
+
   // Expo Router uses Error Boundaries to catch errors in the navigation tree.
   useEffect(() => {
     if (error) throw error;
@@ -41,8 +44,12 @@ export default function RootLayout() {
   }, [loaded]);
 
   if (!loaded) {
-    return null;
+    return <Text>Fetching Data ...</Text>;
   }
+
+  // if (!isReady) {
+  //   return null
+  // }
 
   return <RootLayoutNav />;
 }
@@ -52,9 +59,13 @@ function RootLayoutNav() {
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
+      <Stack
+        screenOptions={{
+          headerShown: false
+        }}
+      >
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+        <Stack.Screen name="modal" options={{ presentation: 'modal', headerShown: true }} />
       </Stack>
     </ThemeProvider>
   );
