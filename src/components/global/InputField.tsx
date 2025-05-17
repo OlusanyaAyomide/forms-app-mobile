@@ -35,7 +35,7 @@ export default function InputField<T extends FieldValues>({
 
   const theme = useColorScheme()
   return (
-    <View className={cn('mb-5 w-full', containerClassName)}>
+    <View className={cn('mb-8 w-full', containerClassName)}>
       {labelText && !showPlaceholder && (
         <Text className="mb-1 text-base font-medium">{labelText}</Text>
       )}
