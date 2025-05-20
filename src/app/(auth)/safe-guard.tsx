@@ -14,8 +14,8 @@ export default function SafeGuard() {
       subheadline="We keep your content protected. Log in to create, share, and manage quizzes with confidence."
       currentPage={2}
       totalPages={2}
-      ctaText="Log In Securely"
-      onContinue={() => router.push('/login')}
+      ctaText="Get Started"
+      onContinue={() => router.push('/signup')}
       showSkip={false}
     />
   );

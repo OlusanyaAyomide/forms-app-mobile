@@ -64,22 +64,6 @@ export default function LogInScreen() {
           </TouchableOpacity>
         </Link>
       </View>
-
-      {/* Social Login - Placeholders */}
-      <View className="mt-8">
-        <Text className="text-center text-gray-500">Or</Text>
-        <View className="flex-row justify-center mt-4">
-          <TouchableOpacity className="mx-2">
-            <FontAwesome name="facebook-square" size={30} color="#3b5998" />
-          </TouchableOpacity>
-          <TouchableOpacity className="mx-2">
-            <FontAwesome name="twitter-square" size={30} color="#1da1f2" />
-          </TouchableOpacity>
-          <TouchableOpacity className="mx-2">
-            <FontAwesome name="apple" size={30} color="#000" />
-          </TouchableOpacity>
-        </View>
-      </View>
       <View className="mt-8 text-center">
         <Text className="text-gray-500 text-center">
           Don't have an account?{' '}
