@@ -1,80 +1,62 @@
 import React from 'react';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { Link, Tabs, Redirect } from 'expo-router';
-import { Pressable } from 'react-native';
+import { Tabs, Redirect } from 'expo-router';
 
-import Colors from '@/src/constants/Colors';
 import { useColorScheme } from '@/src/components/useColorScheme';
 import { useClientOnlyValue } from '@/src/components/useClientOnlyValue';
-import { cn } from '@/src/utils/cn';
-
-// You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
-function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>['name'];
-  color: string;
-}) {
-  return <FontAwesome size={28} className="-mb-[3px]" {...props} />;
-}
+import CustomTabBar from '@/src/components/CustomTabBar'; // Import the custom tab bar
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
 
-  const isFirstLogIn = true
-
-  const isLoggedIn = false
+  const isFirstLogIn = false; // Keep your existing auth logic
+  const isLoggedIn = true; // Keep your existing auth logic
 
   if (isFirstLogIn) {
-    return <Redirect href={"/onboarding"} />
+    return <Redirect href={"/onboarding"} />;
   } else if (!isLoggedIn) {
-    return <Redirect href={"/login"} />
+    return <Redirect href={"/login"} />;
   }
 
   return (
     <Tabs
+      tabBar={(props) => <CustomTabBar {...props} />} // Use the custom tab bar
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        // Disable the static render of the header on web
-        // to prevent a hydration error in React Navigation v6.
         headerShown: useClientOnlyValue(false, true),
       }}>
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Tab One',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-          headerRight: () => (
-            <Link href="/modal" asChild>
-              <Pressable>
-                {({ pressed }) => (
-                  <FontAwesome
-                    name="info-circle"
-                    size={25}
-                    color={Colors[colorScheme ?? 'light'].text}
-                    className={cn(
-                      'mr-4',
-                      (pressed) && 'opacity-50',
-                    )}
-                  />
-                )}
-              </Pressable>
-            </Link>
-          ),
+          title: 'Home',
         }}
       />
       <Tabs.Screen
-        name="two"
+        name="quiz"
         options={{
-          title: 'Tab Two',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          title: 'Quiz',
         }}
       />
       <Tabs.Screen
-        name="settings"
+        name="modal"
         options={{
-          title: 'Settings',
-          tabBarIcon: ({ color }) => <TabBarIcon name="gear" color={color} />,
+          title: 'Add New',
+          headerShown: false,
+        }}
+      />
+      <Tabs.Screen
+        name="form"
+        options={{
+          title: 'Form',
+        }}
+      />
+      <Tabs.Screen
+        name="members"
+        options={{
+          title: 'Members',
         }}
       />
     </Tabs>
   );
 }
+
+
+//https://gist.github.com/OlusanyaAyomide/8c22e2df7b27bd42b0526ed136f40832

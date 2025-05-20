@@ -2,7 +2,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { TouchableOpacity } from 'react-native';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Link } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
 import { FontAwesome } from '@expo/vector-icons';
 
 import { View, Text } from '@/src/components/Themed';
@@ -14,6 +14,8 @@ import { imageLinks } from '@/src/components/assests/imageLinks';
 
 export default function LogInScreen() {
 
+
+  const router = useRouter()
   const {
     control,
     handleSubmit,
@@ -24,6 +26,7 @@ export default function LogInScreen() {
 
   const onSubmit = (data: UserLoginFormData) => {
     console.log(data);
+    router.replace("/(tabs)")
   };
 
   return (

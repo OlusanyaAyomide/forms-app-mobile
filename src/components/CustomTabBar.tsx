@@ -1,10 +1,12 @@
 import React from 'react';
-import { View, Pressable, Text } from 'react-native';
+import { Pressable } from 'react-native';
+import { View, Text } from './Themed';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { Link } from 'expo-router';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { cn } from '@/src/utils/cn';
-import Colors from '@/src/constants/Colors'; // Assuming Colors is needed for tint color
+import Colors from '@/src/constants/Colors';
+import { useColorScheme } from '@/src/components/useColorScheme';
 
 // You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
 function TabBarIcon(props: {
@@ -15,28 +17,34 @@ function TabBarIcon(props: {
 }
 
 const CustomTabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
-  const colorScheme = 'light'; // Assuming light mode for now, can integrate useColorScheme later if needed
+  const colorScheme = useColorScheme();
+
+  // Define the order of the tabs to display in the custom bar
+  const tabOrder = ['index', 'quiz', 'modal', 'form', 'members'];
 
   const getIconName = (routeName: string): React.ComponentProps<typeof FontAwesome>['name'] => {
     switch (routeName) {
       case 'index':
-        return 'home'; // Example icon for Home
+        return 'home';
       case 'quiz':
-        return 'question'; // Example icon for Quiz
+        return 'book';
       case 'form':
-        return 'wpforms'; // Example icon for Form
-      case 'participants':
-        return 'users'; // Example icon for Participants
+        return 'wpforms';
+      case 'members':
+        return 'users';
       case 'modal':
-        return 'plus'; // Icon for the central plus button
+        return 'plus';
       default:
-        return 'code'; // Default icon
+        return 'code';
     }
   };
 
   return (
-    <View className="flex-row bg-white border-t border-gray-200 pb-safe-area">
-      {state.routes.map((route, index) => {
+    <View className="flex-row border-t-gray-200 dark:border-t-gray-700 pt-2 border pb-8">
+      {tabOrder.map((routeName, index) => {
+        const route = state.routes.find(r => r.name === routeName);
+        if (!route) return null; // Should not happen if tabOrder matches defined screens
+
         const { options } = descriptors[route.key];
         const label =
           options.tabBarLabel !== undefined
@@ -45,7 +53,7 @@ const CustomTabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => 
               ? options.title
               : route.name;
 
-        const isFocused = state.index === index;
+        const isFocused = state.index === state.routes.findIndex(r => r.name === routeName);
 
         const onPress = () => {
           const event = navigation.emit({
@@ -68,21 +76,33 @@ const CustomTabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => 
 
         // Handle the central plus button separately
         if (route.name === 'modal') {
+          const onPlusButtonPress = () => {
+            const event = navigation.emit({
+              type: 'tabPress',
+              target: route.key,
+              canPreventDefault: true,
+            });
+
+            if (!event.defaultPrevented) {
+              // Navigate specifically to the modal route
+              navigation.navigate('modal');
+            }
+          };
+
           return (
-            <View key={route.key} className="flex-1 items-center justify-center -mt-8">
+            <View key={route.key} className="flex-1 items-center justify-center -mt-10">
               <Pressable
                 accessibilityRole="button"
                 accessibilityState={isFocused ? { selected: true } : {}}
                 accessibilityLabel={options.tabBarAccessibilityLabel}
                 testID={options.tabBarTestID}
-                onPress={onPress}
+                onPress={onPlusButtonPress} // Use the specific handler for the plus button
                 onLongPress={onLongPress}
                 className={cn(
-                  'w-16 h-16 rounded-full items-center justify-center',
-                  'bg-blue-500' // Placeholder for bg-primary, will need to map Colors.tint to a Tailwind class or use inline style
+                  'w-16 h-16 rounded-full shadow items-center justify-center',
+                  'bg-primary'
                 )}
                 style={{
-                  // Example inline style for floating effect, can refine with NativeWind if possible
                   shadowColor: '#000',
                   shadowOffset: { width: 0, height: 2 },
                   shadowOpacity: 0.25,
@@ -90,16 +110,16 @@ const CustomTabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => 
                   elevation: 5,
                 }}
               >
-                <TabBarIcon
-                  name={getIconName(route.name)}
-                  color="white" // Assuming white icon on primary background
+                <FontAwesome
+                  color='white'
+                  name='plus'
+                  size={20}
                 />
               </Pressable>
             </View>
           );
         }
 
-        // Render standard tabs
         return (
           <Pressable
             key={route.key}
@@ -113,12 +133,12 @@ const CustomTabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => 
           >
             <TabBarIcon
               name={getIconName(route.name)}
-              color={isFocused ? Colors[colorScheme].tint : Colors[colorScheme].text}
+              color={isFocused ? Colors.primary : Colors[colorScheme ?? 'light'].tint}
+
             />
-            {/* Optional: Add label text */}
-            {/* <Text style={{ color: isFocused ? Colors[colorScheme].tint : Colors[colorScheme].text }}>
+            <Text className='mt-1' style={{ color: isFocused ? Colors.primary : Colors[colorScheme ?? 'light'].text }}>
               {label as string}
-            </Text> */}
+            </Text>
           </Pressable>
         );
       })}
