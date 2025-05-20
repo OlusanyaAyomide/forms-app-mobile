@@ -4,6 +4,8 @@ import { Tabs, Redirect } from 'expo-router';
 import { useColorScheme } from '@/src/components/useColorScheme';
 import { useClientOnlyValue } from '@/src/components/useClientOnlyValue';
 import CustomTabBar from '@/src/components/CustomTabBar'; // Import the custom tab bar
+import CustomHeader from '@/src/components/CustomHeader';
+import { SafeAreaView } from '@/src/components/Themed';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -18,43 +20,42 @@ export default function TabLayout() {
   }
 
   return (
-    <Tabs
-      tabBar={(props) => <CustomTabBar {...props} />} // Use the custom tab bar
-      screenOptions={{
-        headerShown: useClientOnlyValue(false, true),
-      }}>
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: 'Home',
-        }}
-      />
-      <Tabs.Screen
-        name="quiz"
-        options={{
-          title: 'Quiz',
-        }}
-      />
-      <Tabs.Screen
-        name="modal"
-        options={{
-          title: 'Add New',
-          headerShown: false,
-        }}
-      />
-      <Tabs.Screen
-        name="form"
-        options={{
-          title: 'Form',
-        }}
-      />
-      <Tabs.Screen
-        name="members"
-        options={{
-          title: 'Members',
-        }}
-      />
-    </Tabs>
+    <SafeAreaView className='pb-0' edges={["top"]}>
+      <Tabs
+        tabBar={(props) => <CustomTabBar {...props} />}
+        screenOptions={{
+          headerShown: useClientOnlyValue(false, true),
+          header: () => (
+            <CustomHeader />
+          )
+
+        }}>
+        <Tabs.Screen
+          name="index"
+          options={{
+            title: 'Home',
+          }}
+        />
+        <Tabs.Screen
+          name="quiz"
+          options={{
+            title: 'Quiz',
+          }}
+        />
+        <Tabs.Screen
+          name="form"
+          options={{
+            title: 'Form',
+          }}
+        />
+        <Tabs.Screen
+          name="members"
+          options={{
+            title: 'Members',
+          }}
+        />
+      </Tabs>
+    </SafeAreaView>
   );
 }
 

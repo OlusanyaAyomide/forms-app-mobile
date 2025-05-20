@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 // import { Image as DefaultImage } from 'expo-image';
 
-import { SafeAreaView as DefaultSafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView as DefaultSafeAreaView, SafeAreaViewProps } from 'react-native-safe-area-context';
 
 import { useColorScheme } from '@/src/components/useColorScheme';
 import { cn } from '../utils/cn';
@@ -31,7 +31,7 @@ type ThemedImageprop = {
 export type TextProps = ThemeProps & DefaultText['props'];
 export type ViewProps = ThemeProps & DefaultView['props'];
 export type SwitchProps = ThemeProps & DefaultSwitch['props'];
-export type SafeAreaViewProps = ThemeProps & DefaultSwitch['props']
+
 
 export function useThemedColor(styleType: 'text' | 'background') {
 
@@ -102,7 +102,7 @@ export function SafeAreaView(props: SafeAreaViewProps) {
   const backgroundColor = useThemedColor('background');
 
   return <DefaultSafeAreaView className={cn(
-    backgroundColor, 'min-h-screen px-2',
+    backgroundColor, 'min-h-screen',
     className
   )} {...otherProps}
   />
