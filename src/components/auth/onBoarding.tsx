@@ -53,7 +53,7 @@ export function OnBoardingScreen({
               className={cn(
                 "h-2 w-2 rounded-full mx-1",
                 index === currentPage - 1
-                  ? "bg-primary" // Active dot
+                  ? "bg-primary w-6" // Active dot
                   : "bg-secondary" // Inactive dot
               )}
             />
